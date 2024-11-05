@@ -1,22 +1,37 @@
 <!DOCTYPE HTML>
 <html>
-
 <head>
   <meta charset="utf-8">
+  <style>
+    #menu {
+      cursor: pointer;
+    }
+    
+  </style>
+  <script>
+    document.addEventListener('DOMContentLoaded', (event) => {
+      let menu = document.getElementById('menu');
+      let ulist = document.getElementsByTagName('ul')[0];
+      menu.onclick = () => {
+        if (ulist.hidden == false) {
+          ulist.hidden = true;
+          menu.innerHTML = '▶ Sweeties (click me)!';
+        } else {
+          ulist.hidden = false;
+          menu.innerHTML = '▼ Sweeties (click me)!';
+        }
+      };
+    });
+  </script>
 </head>
-
 <body>
 
-  <input type="button" id="hider" value="Click to hide the text" />
-
-  <div id="text">Text</div>
-
-  <script>
-    let text = document.getElementById('text')
-    text.onclick = () => {
-      text.innerHTML = ''
-    }
-  </script>
-
+  <p id="menu">▼ Sweeties (click me)!</p>
+  <ul>
+    <li>Cake</li>
+    <li>Donut</li>
+    <li>Honey</li>
+  </ul>
+  
 </body>
 </html>

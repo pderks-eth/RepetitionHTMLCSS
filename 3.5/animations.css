@@ -1,0 +1,22 @@
+.cup {
+    margin: 10px;
+    width: 200px;
+    height: 200px;
+}
+
+#gameArea {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: auto;
+}
+
+#shuffleButton {
+    margin: 10px;
+    padding: 10px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
