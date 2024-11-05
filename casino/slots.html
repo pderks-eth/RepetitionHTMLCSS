@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Slot Machine Game</title>
+    <style>
+        /* CSS Styles */
+        #slot-machine {
+            display: flex;
+            justify-content: center;
+            margin: 20px 0;
+        }
+
+        .reel {
+            font-size: 50px;
+            margin: 0 10px;
+            width: 60px;
+            height: 60px;
+            text-align: center;
+            line-height: 60px;
+            border: 2px solid #000;
+            border-radius: 10px;
+            background-color: #fff;
+        }
+
+        @keyframes spin {
+            0% { transform: rotateX(0deg); }
+            100% { transform: rotateX(360deg); }
+        }
+
+        .spinning {
+            animation: spin 1s ease-in-out;
+        }
+    </style>
+</head>
+<body>
+    <h1>Slot Machine Game</h1>
+    <p>Balance: $<span id="balance">1000</span></p>
+    <label for="bet-amount">Bet Amount: $</label>
+    <input type="number" id="bet-amount" min="1" value="10">
+    <button id="spin-button">Spin</button>
+    <div id="slot-machine">
+        <div class="reel" id="reel1">🍒</div>
+        <div class="reel" id="reel2">🍒</div>
+        <div class="reel" id="reel3">🍒</div>
+    </div>
+    <p id="result"></p>
+    <script>
+        // JavaScript Code
+        const balanceElement = document.getElementById('balance');
+        const betAmountInput = document.getElementById('bet-amount');
+        const spinButton = document.getElementById('spin-button');
+        const resultElement = document.getElementById('result');
+        const reels = [
+            document.getElementById('reel1'),
+            document.getElementById('reel2'),
+            document.getElementById('reel3')
+        ];
+
+        let balance = 1000;
+
+        const symbols = ['🍒', '🍋', '🍊', '🍉', '⭐', '💎'];
+
+        spinButton.addEventListener('click', spin);
+
+        function spin() {
+            let bet = parseInt(betAmountInput.value);
+            if (isNaN(bet) || bet <= 0) {
+                alert('Please enter a valid bet amount.');
+                return;
+            }
+            if (bet > balance) {
+                alert('You do not have enough balance.');
+                return;
+            }
+            balance -= bet;
+            balanceElement.textContent = balance;
+
+            // Add spinning class for animation
+            reels.forEach(reel => {
+                reel.classList.add('spinning');
+            });
+
+            setTimeout(() => {
+                // Remove spinning class after animation
+                reels.forEach(reel => {
+                    reel.classList.remove('spinning');
+                });
+
+                // Randomly select symbols
+                const results = [];
+                for (let i = 0; i < reels.length; i++) {
+                    const symbol = symbols[Math.floor(Math.random() * symbols.length)];
+                    reels[i].textContent = symbol;
+                    results.push(symbol);
+                }
+
+                // Check for win
+                let winnings = 0;
+                if (results[0] === results[1] && results[1] === results[2]) {
+                    winnings = bet * 10; // Jackpot!
+                    resultElement.textContent = '🎉 Jackpot! You win $' + winnings + '!';
+                } else if (results[0] === results[1] || results[1] === results[2] || results[0] === results[2]) {
+                    winnings = bet * 2; // Small win
+                    resultElement.textContent = '😊 You matched two symbols! You win $' + winnings + '!';
+                } else {
+                    resultElement.textContent = '😞 You lose!';
+                }
+
+                balance += winnings;
+                balanceElement.textContent = balance;
+            }, 1000); // Duration matches the animation duration
+        }
+    </script>
+</body>
+</html>

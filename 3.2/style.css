@@ -1,0 +1,85 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Arial, sans-serif;
+}
+
+body {
+    background-color: #00cc00;
+    color: black;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+main {
+    max-width: 800px;
+    padding: 20px;
+    background-color: #00ff00;
+    text-align: left;
+}
+
+header h1 {
+    font-size: 2em;
+    margin-bottom: 10px;
+}
+
+.buttons {
+    margin: 10px 0;
+    display: flex;
+    justify-content: left;
+}
+
+button {
+    background-color: white;
+    border: 1px solid gray;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 20px;
+}
+
+.overview {
+    margin: 20px 0;
+}
+
+.overview h2 {
+    font-size: 1.5em;
+}
+
+.overview p {
+    font-style: italic;
+}
+
+.top-birthweek, .latest-releases {
+    margin: 20px 0;
+}
+
+.top-birthweek ol {
+    text-align: left;
+    margin: 10px auto;
+    max-width: 600px;
+}
+
+.latest-releases .album-covers {
+    display: flex;
+    justify-content: space-around;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.album-covers img {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 5px;
+}
+
+footer {
+    background-color: #99ff99;
+    padding: 10px;
+    border-radius: 10px;
+    margin-top: 20px;
+}
