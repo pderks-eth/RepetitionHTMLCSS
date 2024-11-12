@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="stlyle.css">
+    <title>Posts</title>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+
+            postArea = document.getElementById('posts');
+            refresh = document.getElementById('refreshButton');
+            send = document.getElementById('sendButton');
+            PostForm = document.getElementById('PostForm');
+            Id_of_new_post = 1;
+
+            async function loadPosts() {
+                postArea.innerHTML = '';
+
+                const url = 'https://jsonplaceholder.typicode.com/posts';
+                let result = await fetch(url);
+                let posts = await result.json();
+                showPosts(posts);
+            }
+
+            function showPosts(posts) {
+                posts.forEach((post) => {
+                    const articel = document.createElement('articel');
+
+                    // Title
+                    const postTitle = document.createElement('h2');
+                    postTitle.innerHTML = post.title;
+                    articel.appendChild(postTitle);
+
+                    // Text
+                    const postText = document.createElement('p');
+                    postText.innerHTML = post.body;
+                    articel.appendChild(postText);
+
+                    // Delete Button
+                    const postButton = document.createElement('button');
+                    postButton.setAttribute('id', post.id);
+                    postButton.innerHTML = 'delete';
+                    articel.appendChild(postButton);
+
+                    postArea.appendChild(articel);
+                });
+            }
+
+
+
+            async function sendPost(event) {
+                event.preventDefault();
+                Id_of_new_post++;
+                
+                const newpost = {
+                    title: document.getElementById('title').value,
+                    text: document.getElementById('text').value
+
+                }
+
+                console.log(newpost.title);
+                console.log(newpost.text);
+
+                fetch('https://jsonplaceholder.typicode.com/posts', {
+                    method: 'POST',
+                    body: JSON.stringify({
+                        title: newpost.title,
+                        body: newpost.text,
+                        userId: Id_of_new_post,
+                    }),
+                    headers: {
+                        'Content-type': 'application/json; charset=UTF-8',
+                    },
+                })
+                    .then((response) => response.json())
+                    .then((json) => console.log(json));
+            }
+
+
+            await loadPosts();
+            refresh.addEventListener('click', loadPosts);
+            PostForm.addEventListener('submit', sendPost);
+        });
+    </script>
+</head>
+
+<body>
+    <h1>Posts von JSOMPlaceholder</h1>
+
+    <form id="PostForm" method="post">
+        <label for="NewPostTitle">Title</label>
+        <input type="title" name="NewPostTitle" id="title" required>
+        <br>
+        <label for="NewPostText">Text</label>
+        <input type="text" name="NewPostText" id="text" required>
+        <br>
+
+        <input id="submit" type="submit" value="Submit">
+    </form>
+
+    <button id="refreshButton">Refresh</button>
+    <div id="posts">
+
+    </div>
+</body>
+
+</html>
